@@ -3,23 +3,20 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Chinese Culture Spin & Learn!</title>
-<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;700&family=Fredoka+One&family=Nunito:wght@400;600;700;800&display=swap" rel="stylesheet">
+<title>Chinese Culture Quiz – Herbert Hoover Middle School Multicultural Night</title>
 <style>
+  /* ── 100% offline: zero external resources ── */
   :root {
-    --red:    #C0392B;
-    --red2:   #E74C3C;
-    --gold:   #F1C40F;
-    --gold2:  #E67E22;
-    --dark:   #1a0a00;
-    --cream:  #FFF8EE;
-    --ink:    #2C1A0E;
+    --red:   #C0392B;
+    --red2:  #E74C3C;
+    --gold:  #F1C40F;
+    --gold2: #E67E22;
+    --dark:  #1a0a00;
   }
-
   * { box-sizing: border-box; margin: 0; padding: 0; }
 
   body {
-    font-family: 'Nunito', sans-serif;
+    font-family: 'Trebuchet MS', 'Segoe UI', system-ui, sans-serif;
     background: var(--dark);
     min-height: 100vh;
     overflow-x: hidden;
@@ -28,363 +25,268 @@
       radial-gradient(circle at 90% 80%, rgba(241,196,15,0.12) 0%, transparent 50%);
   }
 
-  /* Decorative lanterns */
   .lanterns {
-    position: fixed; top: 0; left: 0; width: 100%; pointer-events: none; z-index: 0;
-    display: flex; justify-content: space-between; padding: 0 2rem;
+    position: fixed; top: 0; left: 0; width: 100%;
+    pointer-events: none; z-index: 0;
+    display: flex; justify-content: space-between; padding: 0 1.5rem;
   }
   .lantern {
-    width: 28px; height: 44px; border-radius: 50%; position: relative;
-    animation: sway 3s ease-in-out infinite;
+    width: 26px; height: 42px; border-radius: 50%;
+    position: relative; animation: sway 3s ease-in-out infinite;
   }
   .lantern::before {
-    content: '';
-    position: absolute; top: -10px; left: 50%; transform: translateX(-50%);
-    width: 2px; height: 12px; background: var(--gold);
+    content:''; position:absolute; top:-10px; left:50%; transform:translateX(-50%);
+    width:2px; height:12px; background:var(--gold);
   }
   .lantern::after {
-    content: '';
-    position: absolute; bottom: -6px; left: 50%; transform: translateX(-50%);
-    width: 1px; height: 8px; background: var(--gold);
+    content:''; position:absolute; bottom:-6px; left:50%; transform:translateX(-50%);
+    width:1px; height:8px; background:var(--gold);
   }
-  .lantern:nth-child(odd) { background: radial-gradient(circle at 40% 40%, #ff6b6b, var(--red)); animation-delay: -1.5s; }
-  .lantern:nth-child(even) { background: radial-gradient(circle at 40% 40%, #ffe56b, var(--gold2)); }
+  .lantern:nth-child(odd)  { background:radial-gradient(circle at 40% 40%,#ff6b6b,var(--red)); animation-delay:-1.5s; }
+  .lantern:nth-child(even) { background:radial-gradient(circle at 40% 40%,#ffe56b,var(--gold2)); }
   @keyframes sway { 0%,100%{transform:rotate(-8deg)} 50%{transform:rotate(8deg)} }
+
+  #musicBtn {
+    position: fixed; top: 14px; right: 14px; z-index: 20;
+    background: rgba(0,0,0,0.45); border: 1.5px solid var(--gold);
+    border-radius: 50%; width: 42px; height: 42px;
+    font-size: 1.15rem; cursor: pointer; color: var(--gold);
+    display: flex; align-items: center; justify-content: center;
+    transition: background 0.2s;
+  }
+  #musicBtn:hover { background: rgba(241,196,15,0.18); }
 
   header {
     position: relative; z-index: 1;
-    text-align: center; padding: 2rem 1rem 0.5rem;
+    text-align: center; padding: 1.4rem 1rem 0.3rem;
   }
   header h1 {
-    font-family: 'Fredoka One', cursive;
-    font-size: clamp(2rem, 5vw, 3.5rem);
+    font-family: Georgia, 'Times New Roman', serif;
+    font-size: clamp(1.8rem, 4.5vw, 3rem);
+    font-weight: 700;
     color: var(--gold);
     text-shadow: 3px 3px 0 var(--red), 5px 5px 0 rgba(0,0,0,0.4);
-    letter-spacing: 2px;
+    letter-spacing: 1px; line-height: 1.2;
   }
-  header p {
-    color: #ffd580;
-    font-size: 1.1rem;
-    margin-top: 0.4rem;
-    font-weight: 600;
+  .school-name {
+    display: block;
+    font-size: clamp(0.72rem, 1.9vw, 0.98rem);
+    font-weight: 600; color: #ffcc66;
+    letter-spacing: 2px; text-transform: uppercase;
+    margin-top: 0.35rem; opacity: 0.9;
   }
   .chinese-char {
-    font-family: 'Noto Serif SC', serif;
-    font-size: 1.8rem;
-    color: rgba(241,196,15,0.5);
-    letter-spacing: 0.5rem;
-    display: block;
-    margin-top: 0.2rem;
+    display: block; font-size: 1.5rem;
+    color: rgba(241,196,15,0.38);
+    letter-spacing: 0.5rem; margin-top: 0.2rem;
   }
 
   main {
     position: relative; z-index: 1;
     display: flex; flex-direction: column; align-items: center;
-    padding: 1rem;
-    gap: 1.5rem;
+    padding: 0.8rem 1rem 2rem; gap: 1.2rem;
   }
 
-  .wheel-area {
-    position: relative;
-    display: flex; flex-direction: column; align-items: center;
-  }
-
-  /* Pointer arrow */
+  .wheel-area { position:relative; display:flex; flex-direction:column; align-items:center; }
   .pointer {
-    width: 0; height: 0;
-    border-left: 18px solid transparent;
-    border-right: 18px solid transparent;
-    border-top: 36px solid var(--gold);
-    filter: drop-shadow(0 2px 4px rgba(0,0,0,0.5));
-    position: relative; z-index: 5;
-    margin-bottom: -4px;
+    width:0; height:0;
+    border-left:16px solid transparent;
+    border-right:16px solid transparent;
+    border-top:32px solid var(--gold);
+    filter:drop-shadow(0 2px 4px rgba(0,0,0,0.5));
+    position:relative; z-index:5; margin-bottom:-3px;
   }
-
   .wheel-frame {
-    width: min(440px, 92vw); height: min(440px, 92vw);
-    border-radius: 50%;
-    padding: 10px;
-    background: conic-gradient(var(--gold), var(--gold2), var(--gold), var(--gold2));
-    box-shadow: 0 0 40px rgba(241,196,15,0.4), 0 0 80px rgba(192,57,43,0.3), inset 0 0 20px rgba(0,0,0,0.2);
-    position: relative;
+    width:min(430px,92vw); height:min(430px,92vw);
+    border-radius:50%; padding:9px;
+    background:conic-gradient(var(--gold),var(--gold2),var(--gold),var(--gold2));
+    box-shadow:0 0 40px rgba(241,196,15,0.35),0 0 80px rgba(192,57,43,0.25);
+    position:relative;
   }
-
   canvas {
-    border-radius: 50%;
-    display: block;
-    cursor: pointer;
-    width: 100%; height: 100%;
-    transition: filter 0.3s;
+    border-radius:50%; display:block; cursor:pointer;
+    width:100%; height:100%; transition:filter 0.2s;
   }
-  canvas:hover { filter: brightness(1.05); }
-
-  /* Center hub */
+  canvas:hover { filter:brightness(1.05); }
   .hub {
-    position: absolute; top: 50%; left: 50%;
-    transform: translate(-50%, -50%);
-    width: 64px; height: 64px;
-    border-radius: 50%;
-    background: radial-gradient(circle at 35% 35%, #ffe566, var(--gold2));
-    border: 4px solid var(--red);
-    box-shadow: 0 0 16px rgba(241,196,15,0.6);
-    display: flex; align-items: center; justify-content: center;
-    font-family: 'Noto Serif SC', serif;
-    font-size: 1.6rem;
-    color: var(--red);
-    z-index: 10; pointer-events: none;
-    user-select: none;
+    position:absolute; top:50%; left:50%;
+    transform:translate(-50%,-50%);
+    width:58px; height:58px; border-radius:50%;
+    background:radial-gradient(circle at 35% 35%,#ffe566,var(--gold2));
+    border:3px solid var(--red);
+    box-shadow:0 0 14px rgba(241,196,15,0.6);
+    display:flex; align-items:center; justify-content:center;
+    font-family:Georgia,serif; font-size:1.5rem; color:var(--red);
+    z-index:10; pointer-events:none; user-select:none;
   }
 
   .spin-btn {
-    font-family: 'Fredoka One', cursive;
-    font-size: 1.4rem;
-    padding: 0.75rem 2.8rem;
-    border-radius: 50px;
-    border: 3px solid var(--gold);
-    background: linear-gradient(135deg, var(--red2), var(--red));
-    color: var(--gold);
-    cursor: pointer;
-    text-shadow: 1px 1px 0 rgba(0,0,0,0.3);
-    box-shadow: 0 6px 20px rgba(192,57,43,0.5), 0 2px 0 rgba(0,0,0,0.3);
-    transition: transform 0.15s, box-shadow 0.15s;
-    letter-spacing: 1px;
+    font-family:Georgia,serif; font-size:1.3rem; font-weight:700;
+    padding:0.7rem 2.6rem; border-radius:50px;
+    border:3px solid var(--gold);
+    background:linear-gradient(135deg,var(--red2),var(--red));
+    color:var(--gold); cursor:pointer;
+    text-shadow:1px 1px 0 rgba(0,0,0,0.3);
+    box-shadow:0 6px 20px rgba(192,57,43,0.5),0 2px 0 rgba(0,0,0,0.3);
+    transition:transform 0.15s,box-shadow 0.15s; letter-spacing:1px;
   }
-  .spin-btn:hover { transform: translateY(-2px); box-shadow: 0 10px 28px rgba(192,57,43,0.6); }
-  .spin-btn:active { transform: translateY(1px); box-shadow: 0 3px 10px rgba(192,57,43,0.4); }
-  .spin-btn:disabled { opacity: 0.5; cursor: not-allowed; transform: none; }
+  .spin-btn:hover  { transform:translateY(-2px); box-shadow:0 10px 28px rgba(192,57,43,0.6); }
+  .spin-btn:active { transform:translateY(1px); }
+  .spin-btn:disabled { opacity:0.5; cursor:not-allowed; transform:none; }
 
-  /* Score strip */
   .score-strip {
-    display: flex; gap: 2rem; align-items: center;
-    background: rgba(255,255,255,0.06);
-    border: 1px solid rgba(241,196,15,0.25);
-    border-radius: 50px;
-    padding: 0.5rem 2rem;
+    display:flex; gap:2rem; align-items:center;
+    background:rgba(255,255,255,0.06);
+    border:1px solid rgba(241,196,15,0.25);
+    border-radius:50px; padding:0.45rem 1.8rem;
   }
-  .score-item { text-align: center; }
+  .score-item { text-align:center; }
   .score-item .val {
-    display: block;
-    font-family: 'Fredoka One', cursive;
-    font-size: 1.8rem;
-    color: var(--gold);
-    line-height: 1;
+    display:block;
+    font-family:Georgia,serif; font-size:1.7rem; color:var(--gold); line-height:1;
   }
   .score-item .lbl {
-    font-size: 0.72rem;
-    text-transform: uppercase;
-    letter-spacing: 1px;
-    color: rgba(255,200,80,0.6);
-    font-weight: 700;
+    font-size:0.7rem; text-transform:uppercase; letter-spacing:1px;
+    color:rgba(255,200,80,0.55); font-weight:700;
   }
-  .divider { width: 1px; height: 36px; background: rgba(241,196,15,0.25); }
+  .divider { width:1px; height:34px; background:rgba(241,196,15,0.25); }
 
-  /* MODAL */
   .modal-bg {
-    display: none;
-    position: fixed; inset: 0;
-    background: rgba(10,3,0,0.88);
-    backdrop-filter: blur(4px);
-    z-index: 100;
-    align-items: center; justify-content: center;
-    padding: 1rem;
+    display:none; position:fixed; inset:0;
+    background:rgba(10,3,0,0.88); backdrop-filter:blur(4px);
+    z-index:100; align-items:center; justify-content:center; padding:1rem;
   }
-  .modal-bg.show { display: flex; }
-
+  .modal-bg.show { display:flex; }
   .modal {
-    background: linear-gradient(160deg, #2a0e04, #1a0800);
-    border: 3px solid var(--gold);
-    border-radius: 24px;
-    max-width: 520px; width: 100%;
-    overflow: hidden;
-    box-shadow: 0 0 60px rgba(241,196,15,0.25), 0 30px 80px rgba(0,0,0,0.8);
-    animation: popIn 0.35s cubic-bezier(.175,.885,.32,1.275) both;
+    background:linear-gradient(160deg,#2a0e04,#1a0800);
+    border:3px solid var(--gold); border-radius:22px;
+    max-width:530px; width:100%; overflow:hidden;
+    box-shadow:0 0 60px rgba(241,196,15,0.2),0 30px 80px rgba(0,0,0,0.8);
+    animation:popIn 0.35s cubic-bezier(.175,.885,.32,1.275) both;
   }
   @keyframes popIn { from{transform:scale(0.7) translateY(20px);opacity:0} to{transform:scale(1);opacity:1} }
-
   .modal-header {
-    background: linear-gradient(135deg, var(--red), #8b1a10);
-    padding: 1.2rem 1.5rem;
-    display: flex; justify-content: space-between; align-items: center;
-    border-bottom: 2px solid var(--gold);
+    background:linear-gradient(135deg,var(--red),#8b1a10);
+    padding:1.1rem 1.4rem;
+    display:flex; justify-content:space-between; align-items:center;
+    border-bottom:2px solid var(--gold);
   }
-  .modal-header .q-tag {
-    font-family: 'Fredoka One', cursive;
-    font-size: 0.85rem;
-    color: var(--gold);
-    letter-spacing: 1px;
-    text-transform: uppercase;
-    background: rgba(0,0,0,0.25);
-    padding: 2px 10px;
-    border-radius: 20px;
+  .q-tag {
+    font-family:Georgia,serif; font-size:0.82rem; font-weight:700;
+    color:var(--gold); letter-spacing:1px; text-transform:uppercase;
+    background:rgba(0,0,0,0.25); padding:2px 10px; border-radius:20px;
   }
   .modal-close {
-    background: none; border: none;
-    color: var(--gold); font-size: 1.5rem;
-    cursor: pointer; padding: 0 4px;
-    line-height: 1;
-    transition: transform 0.2s;
+    background:none; border:none; color:var(--gold);
+    font-size:1.4rem; cursor:pointer; padding:0 4px; line-height:1;
+    transition:transform 0.2s;
   }
-  .modal-close:hover { transform: scale(1.2) rotate(90deg); }
-
-  .modal-body { padding: 1.5rem; }
-
+  .modal-close:hover { transform:scale(1.2) rotate(90deg); }
+  .modal-body { padding:1.4rem; }
   .question-text {
-    font-size: 1.3rem;
-    font-weight: 800;
-    color: #ffe8b0;
-    line-height: 1.4;
-    margin-bottom: 1.2rem;
-    text-align: center;
+    font-size:1.15rem; font-weight:700; color:#ffe8b0;
+    line-height:1.45; margin-bottom:1rem; text-align:center;
   }
-
-  .choices { display: flex; flex-direction: column; gap: 0.6rem; margin-bottom: 1.2rem; }
-
+  .choices { display:flex; flex-direction:column; gap:0.5rem; margin-bottom:1rem; }
   .choice-btn {
-    background: rgba(255,255,255,0.05);
-    border: 1.5px solid rgba(241,196,15,0.3);
-    border-radius: 12px;
-    padding: 0.7rem 1rem;
-    color: #ffdfa0;
-    font-family: 'Nunito', sans-serif;
-    font-size: 1rem;
-    font-weight: 700;
-    cursor: pointer;
-    text-align: left;
-    display: flex; align-items: center; gap: 0.75rem;
-    transition: background 0.2s, border-color 0.2s, transform 0.15s;
+    background:rgba(255,255,255,0.05);
+    border:1.5px solid rgba(241,196,15,0.3);
+    border-radius:11px; padding:0.62rem 1rem;
+    color:#ffdfa0; font-family:'Trebuchet MS',sans-serif;
+    font-size:0.93rem; font-weight:700;
+    cursor:pointer; text-align:left;
+    display:flex; align-items:center; gap:0.65rem;
+    transition:background 0.18s,border-color 0.18s,transform 0.12s;
   }
   .choice-btn:not(.locked):hover {
-    background: rgba(241,196,15,0.12);
-    border-color: var(--gold);
-    transform: translateX(4px);
+    background:rgba(241,196,15,0.12); border-color:var(--gold);
+    transform:translateX(4px);
   }
   .choice-btn .letter {
-    min-width: 28px; height: 28px;
-    border-radius: 50%;
-    background: rgba(241,196,15,0.15);
-    border: 1.5px solid rgba(241,196,15,0.4);
-    display: flex; align-items: center; justify-content: center;
-    font-size: 0.8rem; font-weight: 800;
-    color: var(--gold);
-    flex-shrink: 0;
+    min-width:26px; height:26px; border-radius:50%;
+    background:rgba(241,196,15,0.15); border:1.5px solid rgba(241,196,15,0.4);
+    display:flex; align-items:center; justify-content:center;
+    font-size:0.76rem; font-weight:800; color:var(--gold); flex-shrink:0;
   }
-  .choice-btn.correct {
-    background: rgba(46,213,115,0.18);
-    border-color: #2ed573;
-  }
-  .choice-btn.correct .letter { background: #2ed573; color: #000; border-color: #2ed573; }
-  .choice-btn.wrong {
-    background: rgba(255,71,87,0.18);
-    border-color: #ff4757;
-  }
-  .choice-btn.wrong .letter { background: #ff4757; color: #fff; border-color: #ff4757; }
-
+  .choice-btn.correct { background:rgba(46,213,115,0.18); border-color:#2ed573; }
+  .choice-btn.correct .letter { background:#2ed573; color:#000; border-color:#2ed573; }
+  .choice-btn.wrong   { background:rgba(255,71,87,0.18); border-color:#ff4757; }
+  .choice-btn.wrong .letter   { background:#ff4757; color:#fff; border-color:#ff4757; }
   .fun-fact {
-    background: rgba(241,196,15,0.08);
-    border-left: 3px solid var(--gold);
-    border-radius: 0 12px 12px 0;
-    padding: 0.8rem 1rem;
-    color: #ffd580;
-    font-size: 0.95rem;
-    line-height: 1.5;
-    margin-bottom: 1.2rem;
-    display: none;
+    background:rgba(241,196,15,0.08);
+    border-left:3px solid var(--gold);
+    border-radius:0 11px 11px 0;
+    padding:0.72rem 1rem; color:#ffd580;
+    font-size:0.9rem; line-height:1.55;
+    margin-bottom:1rem; display:none;
   }
-  .fun-fact.show { display: block; }
-  .fun-fact strong { display: block; margin-bottom: 0.2rem; font-size: 0.8rem; letter-spacing: 1px; text-transform: uppercase; color: var(--gold); }
-
+  .fun-fact.show { display:block; }
+  .fun-fact strong {
+    display:block; margin-bottom:0.2rem;
+    font-size:0.74rem; letter-spacing:1px;
+    text-transform:uppercase; color:var(--gold);
+  }
   .next-btn {
-    width: 100%;
-    font-family: 'Fredoka One', cursive;
-    font-size: 1.2rem;
-    padding: 0.75rem;
-    border-radius: 12px;
-    border: 2px solid var(--gold);
-    background: linear-gradient(135deg, var(--gold2), #c0700d);
-    color: #fff;
-    cursor: pointer;
-    letter-spacing: 1px;
-    transition: filter 0.2s, transform 0.15s;
-    display: none;
+    width:100%; font-family:Georgia,serif;
+    font-size:1.12rem; font-weight:700;
+    padding:0.68rem; border-radius:11px;
+    border:2px solid var(--gold);
+    background:linear-gradient(135deg,var(--gold2),#c0700d);
+    color:#fff; cursor:pointer; letter-spacing:1px;
+    transition:filter 0.2s,transform 0.12s; display:none;
   }
-  .next-btn.show { display: block; }
-  .next-btn:hover { filter: brightness(1.1); transform: translateY(-1px); }
+  .next-btn.show { display:block; }
+  .next-btn:hover { filter:brightness(1.1); transform:translateY(-1px); }
 
-  /* Confetti (simple CSS) */
-  .confetti-wrap {
-    position: fixed; inset: 0; pointer-events: none; z-index: 200; overflow: hidden;
-  }
-  .confetto {
-    position: absolute;
-    width: 10px; height: 10px;
-    top: -12px;
-    animation: fall linear forwards;
-  }
-  @keyframes fall {
-    to { transform: translateY(110vh) rotate(720deg); opacity: 0; }
-  }
+  .confetti-wrap { position:fixed; inset:0; pointer-events:none; z-index:200; overflow:hidden; }
+  .confetto { position:absolute; top:-12px; animation:fall linear forwards; }
+  @keyframes fall { to { transform:translateY(110vh) rotate(720deg); opacity:0; } }
 
-  /* Footer */
-  footer {
-    position: relative; z-index: 1;
-    text-align: center;
-    padding: 1.5rem;
-    color: rgba(255,200,80,0.3);
-    font-size: 0.8rem;
-  }
-
-  /* Answered indicators */
   .answered-dots {
-    display: flex; flex-wrap: wrap; gap: 6px; justify-content: center; max-width: 300px;
+    display:flex; flex-wrap:wrap; gap:5px;
+    justify-content:center; max-width:340px;
   }
   .dot {
-    width: 12px; height: 12px; border-radius: 50%;
-    background: rgba(255,255,255,0.1);
-    border: 1.5px solid rgba(241,196,15,0.2);
-    transition: background 0.3s, border-color 0.3s;
+    width:11px; height:11px; border-radius:50%;
+    background:rgba(255,255,255,0.1);
+    border:1.5px solid rgba(241,196,15,0.2);
+    transition:background 0.3s,border-color 0.3s;
   }
-  .dot.done { background: var(--gold2); border-color: var(--gold); }
-  .dot.correct { background: #2ed573; border-color: #2ed573; }
-  .dot.wrong { background: #ff4757; border-color: #ff4757; }
+  .dot.correct { background:#2ed573; border-color:#2ed573; }
+  .dot.wrong   { background:#ff4757; border-color:#ff4757; }
+
+  footer {
+    position:relative; z-index:1;
+    text-align:center; padding:1rem;
+    color:rgba(255,200,80,0.28); font-size:0.76rem;
+  }
 </style>
 </head>
 <body>
 
 <div class="lanterns">
-  <div class="lantern"></div>
-  <div class="lantern"></div>
-  <div class="lantern"></div>
-  <div class="lantern"></div>
-  <div class="lantern"></div>
-  <div class="lantern"></div>
-  <div class="lantern"></div>
+  <div class="lantern"></div><div class="lantern"></div><div class="lantern"></div>
+  <div class="lantern"></div><div class="lantern"></div><div class="lantern"></div>
+  <div class="lantern"></div><div class="lantern"></div>
 </div>
 
 <div class="confetti-wrap" id="confettiWrap"></div>
 
+<button id="musicBtn" onclick="toggleMusic()" title="Toggle background music">🔇</button>
+
 <header>
   <h1>🐉 Spin &amp; Learn! 🐉</h1>
-  <p>Chinese Culture Quiz</p>
+  <span class="school-name">Herbert Hoover Middle School &nbsp;·&nbsp; Multicultural Night</span>
   <span class="chinese-char">文化 知识 趣味</span>
 </header>
 
 <main>
-
   <div class="score-strip">
-    <div class="score-item">
-      <span class="val" id="scoreVal">0</span>
-      <span class="lbl">Score</span>
-    </div>
+    <div class="score-item"><span class="val" id="scoreVal">0</span><span class="lbl">Score</span></div>
     <div class="divider"></div>
-    <div class="score-item">
-      <span class="val" id="askedVal">0</span>
-      <span class="lbl">Asked</span>
-    </div>
+    <div class="score-item"><span class="val" id="askedVal">0</span><span class="lbl">Asked</span></div>
     <div class="divider"></div>
-    <div class="score-item">
-      <span class="val" id="leftVal">10</span>
-      <span class="lbl">Left</span>
-    </div>
+    <div class="score-item"><span class="val" id="leftVal">15</span><span class="lbl">Left</span></div>
   </div>
 
   <div class="wheel-area">
@@ -396,18 +298,15 @@
   </div>
 
   <button class="spin-btn" id="spinBtn" onclick="spinWheel()">🎰 SPIN!</button>
-
   <div class="answered-dots" id="dots"></div>
-
 </main>
 
-<footer>Made with ❤️ for Chinese Culture | Click SPIN to start!</footer>
+<footer>Herbert Hoover Middle School · Multicultural Night · Chinese Culture Quiz</footer>
 
-<!-- Modal -->
-<div class="modal-bg" id="modalBg" role="dialog" aria-modal="true" aria-labelledby="questionText">
+<div class="modal-bg" id="modalBg" role="dialog" aria-modal="true">
   <div class="modal">
     <div class="modal-header">
-      <span class="q-tag" id="qTag">Question 1 / 10</span>
+      <span class="q-tag" id="qTag">Question 1 / 15</span>
       <button class="modal-close" onclick="closeModal()" aria-label="Close">✕</button>
     </div>
     <div class="modal-body">
@@ -423,351 +322,373 @@
 </div>
 
 <script>
+/* ── 15 QUESTIONS (more challenging) ── */
 const QUESTIONS = [
   {
-    q: "What is the longest wall ever built in history, mostly in China?",
-    choices: ["The Great Wall", "Hadrian's Wall", "The Berlin Wall", "The Walls of Troy"],
-    answer: 0,
-    fact: "The Great Wall of China (万里长城) stretches over 13,000 miles! It was built over many centuries to protect China from invaders. You can see parts of it from space!"
+    q:"Which dynasty is responsible for building most of the Great Wall sections that tourists visit today?",
+    choices:["Han Dynasty (206 BCE–220 CE)","Tang Dynasty (618–907 CE)","Ming Dynasty (1368–1644 CE)","Song Dynasty (960–1279 CE)"],
+    answer:2,
+    fact:"The iconic brick-and-stone Great Wall tourists visit was mostly built during the Ming Dynasty. Earlier walls from the Qin and Han dynasties were made of packed earth and have mostly crumbled. The Ming Wall stretches over 5,500 miles across northern China!"
   },
   {
-    q: "Which animal is NOT part of the Chinese Zodiac?",
-    choices: ["Dragon 🐉", "Cat 🐱", "Rooster 🐓", "Ox 🐂"],
-    answer: 1,
-    fact: "There's a legend that says the cat was tricked by the rat and missed the Jade Emperor's race — that's why it's not in the zodiac! The 12 animals are: Rat, Ox, Tiger, Rabbit, Dragon, Snake, Horse, Goat, Monkey, Rooster, Dog, and Pig."
+    q:"The Silk Road connected China to Europe for 1,500 years. Besides silk, which important IDEA traveled west along this route?",
+    choices:["Democracy from ancient Greece","Buddhism, which spread from India through China to East Asia","Christianity, which spread from Rome to China","The concept of zero, invented in China"],
+    answer:1,
+    fact:"The Silk Road carried more than goods — it carried religions, art, science, and disease. Buddhism traveled from India to China, while Islam later spread eastward. Paper, printing, and gunpowder traveled west. The plague (Black Death) may have also spread along this route in the 14th century."
   },
   {
-    q: "What color is considered the luckiest in Chinese culture?",
-    choices: ["Blue 🔵", "Purple 🟣", "Red 🔴", "Green 🟢"],
-    answer: 2,
-    fact: "Red (红色, hóng sè) symbolizes good luck, happiness, and prosperity in Chinese culture. That's why red envelopes filled with money (红包, hóngbāo) are given during Chinese New Year!"
+    q:"The Forbidden City has 9,999 rooms. Why 9,999 and not 10,000?",
+    choices:["The builders ran out of materials","Only Heaven's palace could have 10,000 rooms — the emperor's palace had one fewer out of humility","9,999 was considered the luckiest number","The original plans called for 10,000 but one room was destroyed by fire"],
+    answer:1,
+    fact:"In Chinese culture, 10,000 (万, wàn) represents infinity or perfection, reserved for Heaven alone. By having 9,999 rooms, the emperor humbly acknowledged he was below Heaven. The number 9 (九, jiǔ) also sounds like 'everlasting' — so 9,999 means 'everlasting and one step below Heaven.'"
   },
   {
-    q: "What is the traditional Chinese sport that uses a small ball and paddles — and China wins almost every Olympic gold in it?",
-    choices: ["Badminton", "Table Tennis (Ping Pong)", "Tennis", "Squash"],
-    answer: 1,
-    fact: "Table tennis (乒乓球) is China's national sport! China has won over 60 Olympic gold medals in it. The name 'ping pong' comes from the sound the ball makes — ping on offense, pong on defense!"
+    q:"Why is the number 4 (四, sì) considered unlucky while 8 (八, bā) is extremely lucky in Chinese culture?",
+    choices:["4 looks like a broken symbol; 8 looks like the symbol for prosperity","4 sounds like 'death' (死, sǐ); 8 sounds like 'prosperity' (发, fā)","The emperor was born on the 8th and died on the 4th","4 represents the four bad seasons; 8 represents the eight directions of luck"],
+    answer:1,
+    fact:"This phenomenon — where numbers are lucky or unlucky because of how they sound — is called a homophone superstition. The 2008 Beijing Olympics deliberately opened at 8:08 PM on 8/8/08! Many Chinese buildings skip floor 4, similar to Western buildings skipping floor 13."
   },
   {
-    q: "Chinese New Year is also officially called…?",
-    choices: ["The Moon Festival", "Spring Festival", "Lantern Festival", "Dragon Boat Day"],
-    answer: 1,
-    fact: "Chinese New Year is officially called the Spring Festival (春节, Chūn Jié). It's the biggest holiday in China, celebrated with fireworks, dragon dances, family feasts, and lucky red envelopes!"
+    q:"Emperor Qin Shi Huang's Terracotta Army has over 8,000 soldiers. Why does each soldier have a UNIQUE face?",
+    choices:["It was a test of each sculptor's skill","Ancient Chinese art required unique faces by law","Historians believe they were modeled after real soldiers in his army","The emperor wanted to confuse grave robbers"],
+    answer:2,
+    fact:"Archaeologists believe the craftsmen used real soldiers as models, creating portrait-like faces. Each figure also has unique hair, armor, and hand positions. The army was organized by rank — generals in the back, foot soldiers up front, cavalry on the sides. They were originally painted in bright colors, now faded!"
   },
   {
-    q: "How many animals are in the Chinese Zodiac cycle?",
-    choices: ["8", "10", "12", "16"],
-    answer: 2,
-    fact: "There are 12 animals, each representing a year in a repeating cycle. The cycle goes: Rat, Ox, Tiger, Rabbit, Dragon, Snake, Horse, Goat, Monkey, Rooster, Dog, and Pig. What year were you born in?"
+    q:"Yin-Yang (☯) comes from Taoist philosophy. Which statement best explains it?",
+    choices:["Good and evil are permanently in conflict","Opposite forces are interdependent — each contains a seed of the other","Light will always overcome darkness","The universe was created from the balance of fire and water"],
+    answer:1,
+    fact:"The white dot in the dark half and dark dot in the white half are key — nothing is purely one thing. Hot has cold within it; day has night within it. This is why Taoism teaches 'going with the flow' (无为, wúwéi) — fighting opposites creates imbalance. Taoism is over 2,500 years old!"
   },
   {
-    q: "What is 'dim sum'?",
-    choices: [
-      "A type of martial arts move",
-      "Small bite-sized dishes served in steamer baskets",
-      "A Chinese board game",
-      "A type of silk embroidery"
-    ],
-    answer: 1,
-    fact: "Dim sum (点心) means 'touch the heart' in Cantonese! It's a tradition of eating small dishes like dumplings, buns, and rolls — usually with tea. Going for dim sum is called 'yum cha' (饮茶), which means 'drink tea'!"
+    q:"What is qi (气, qì), the central concept behind acupuncture, tai chi, and traditional Chinese medicine?",
+    choices:["A type of Chinese herbal tea that heals illness","The life force or vital energy believed to flow through pathways in the body","A breathing technique from Buddhist monks","The Chinese word for 'balance' used in cooking and medicine"],
+    answer:1,
+    fact:"Qi (pronounced 'chee') is the fundamental energy believed to flow through channels called meridians. When qi flows freely, you're healthy. When blocked, illness follows. Acupuncture needles unblock these channels. While Western medicine is skeptical of qi, acupuncture is used worldwide for pain management!"
   },
   {
-    q: "The panda is a national symbol of China 🐼. Where is the panda's only wild habitat?",
-    choices: ["All of Asia", "Bamboo forests in China", "Himalayan mountains across Asia", "Tropical rainforests in southern China"],
-    answer: 1,
-    fact: "Giant pandas live only in a few mountain ranges in central China — mainly in Sichuan, Shaanxi, and Gansu provinces. They eat bamboo for up to 12 hours a day! China lends pandas to other countries as a sign of friendship, called 'Panda Diplomacy'."
+    q:"In Peking Opera (京剧), face paint colors have specific meanings. A RED face means loyalty; a WHITE face means treachery. What does a GOLD or SILVER face mean?",
+    choices:["The character is a merchant or wealthy noble","The character is a supernatural being, god, or immortal","The character will be victorious in battle","The character is a foreigner or outsider"],
+    answer:1,
+    fact:"Gold and silver faces represent gods, demons, or mythical creatures — non-human beings with supernatural powers. Peking Opera is over 200 years old and combines singing, music, acting, acrobatics, and martial arts. The costumes can weigh up to 30 pounds! It's a UNESCO Intangible Cultural Heritage."
   },
   {
-    q: "What does the dragon (龙) represent in Chinese culture?",
-    choices: [
-      "Evil and danger ⚠️",
-      "Death and the underworld",
-      "Power, good luck, and prosperity 🌟",
-      "The ocean and storms"
-    ],
-    answer: 2,
-    fact: "Unlike Western dragons, Chinese dragons (龙, lóng) are symbols of GOOD luck, strength, and prosperity! Chinese emperors were called 'sons of the dragon' and wore dragon symbols on their robes. Dragon dances at festivals are meant to bring good fortune!"
+    q:"The Mid-Autumn Festival features mooncakes. What ingredient traditionally fills the MOST classic mooncake?",
+    choices:["Red bean paste","Lotus seed paste with a salted egg yolk","Pork and vegetables","Green tea cream"],
+    answer:1,
+    fact:"The salted egg yolk inside a lotus paste mooncake represents the full moon! Mooncakes are incredibly dense and rich — one can have 800+ calories. They're often given as gifts in ornate boxes. Modern flavors include ice cream, chocolate, and even durian. The festival is celebrated by over 1 billion people!"
   },
   {
-    q: "Which ancient Chinese invention do we use EVERY SINGLE DAY to write, draw, and print?",
-    choices: ["The compass", "Gunpowder", "Paper (and printing)", "Silk"],
-    answer: 2,
-    fact: "Paper was invented in China around 105 AD by a court official named Cai Lun! And the Chinese also invented woodblock printing and movable type — centuries before Gutenberg. China also invented the compass, gunpowder, and silk — four inventions that changed the world!"
+    q:"The character 福 (fú, 'fortune') is hung upside-down. This is because 福倒 (fú dào) sounds like 福到 (fú dào). What does this pun mean?",
+    choices:["'Fortune falls down' — a warning to stay humble","'Fortune has arrived' — the upside-down sounds like it arrived at your door","'Fortune is doubled' — the flip makes it twice as lucky","'Fortune turns' — a reminder that luck changes"],
+    answer:1,
+    fact:"倒 (dào) meaning 'upside-down' is a homophone of 到 (dào) meaning 'to arrive.' So flipping 福 is a visual pun saying fortune has arrived at your home! Chinese culture loves these wordplay traditions — it's also why fish (鱼, yú) is served at New Year, since yú sounds like 'abundance' (余, yú)."
+  },
+  {
+    q:"Mandarin Chinese has 4 tones. Which of these pairs are DIFFERENT words because of tone alone?",
+    choices:["马 (mǎ, horse) and 妈 (mā, mother)","书 (shū, book) and 树 (shù, tree) — same meaning, different formality","大 (dà) and 大 (dà) — always the same","Long words don't use tones, only short ones do"],
+    answer:0,
+    fact:"Tones completely change meaning: mā (flat) = mother, má (rising) = hemp/numb, mǎ (dipping) = horse, mà (falling) = to scold. Saying 'I want to ride my mā' vs 'I want to ride my mǎ' is a very embarrassing mix-up! Mandarin has hundreds of homophone pairs where only tone tells you apart."
+  },
+  {
+    q:"The Dragon Boat Festival honors poet Qu Yuan (屈原). What made him historically unique for his time (278 BCE)?",
+    choices:["He was China's first emperor","He was one of China's earliest known poets who wrote about personal feelings and love of country","He invented the dragon boat racing tradition","He was the first Chinese person to travel to Europe"],
+    answer:1,
+    fact:"Qu Yuan wrote the Chu Ci (楚辞), one of China's greatest poetry collections, filled with vivid imagery and personal emotion — revolutionary for ancient China. After his kingdom of Chu was conquered, he drowned himself in protest. His poetry is still studied in Chinese schools 2,300 years later."
+  },
+  {
+    q:"The Chinese writing system has existed for over 3,000 years. Which statement about Chinese characters is TRUE?",
+    choices:["All characters are pictograms — pictures of what they mean","Most characters combine a meaning component (radical) with a sound component","Characters were invented by one emperor in a single year","Chinese characters are the same as Japanese characters"],
+    answer:1,
+    fact:"Over 80% of Chinese characters are phono-semantic compounds — one part suggests meaning, one suggests pronunciation. For example, 妈 (mā, mother) uses the 'woman' radical (女) + a sound component (马, mǎ). Pure pictograms like 日 (sun) and 月 (moon) are actually rare. Japan borrowed Chinese characters but they're read differently!"
+  },
+  {
+    q:"Confucius (孔子) said: '学而时习之，不亦说乎?' Which best translates this famous opening line of the Analects?",
+    choices:["'Those who are not angry are truly wise'","'Is it not pleasant to learn and practice what you have learned?'","'A man without friends is a man without a future'","'The journey of a thousand miles begins with one step'"],
+    answer:1,
+    fact:"This is the very first line of the Analects (论语), written by Confucius's students. Confucius believed education and constant self-improvement were the foundations of a good society. He opened China's first school for students of all social classes — revolutionary at the time! The last quote is actually from Laozi, founder of Taoism."
+  },
+  {
+    q:"The Three Gorges Dam on the Yangtze River is the world's largest hydroelectric power station. What surprising effect did its massive reservoir have on Earth?",
+    choices:["It caused several small earthquakes in the surrounding region only","The weight of the water shifted Earth's mass slightly, making Earth's rotation marginally slower","It reversed the flow direction of the Yangtze River","The reservoir created enough humidity to change China's national weather patterns"],
+    answer:1,
+    fact:"NASA confirmed that the Three Gorges reservoir holds 42 cubic kilometers of water — enough mass to slightly increase Earth's moment of inertia and slow rotation by 0.06 microseconds per day. The dam also required relocating 1.3 million people and flooded 1,300 archaeological sites. It generates power equivalent to 15 nuclear reactors!"
   }
 ];
 
+/* ── WHEEL ── */
 const COLORS = [
-  '#C0392B','#E67E22','#F1C40F','#27AE60','#2980B9',
-  '#8E44AD','#E74C3C','#D35400','#16A085','#1A5276'
+  '#C0392B','#E67E22','#F39C12','#27AE60','#2980B9',
+  '#8E44AD','#E74C3C','#16A085','#D35400','#1A5276',
+  '#884EA0','#1E8449','#B7950B','#922B21','#1F618D'
 ];
+const EMOJIS = ['🐉','🏮','🥢','🎋','🐼','🎴','🥟','🀄','🏯','📜','🎐','🥮','⛵','🔮','🎑'];
 
-const EMOJIS = ['🐉','🏮','🥢','🎋','🐼','🎴','🥟','🀄','🎎','📜'];
-
-let angle = 0;
-let spinning = false;
-let answered = new Array(10).fill(null);
-let score = 0;
-let asked = 0;
-let currentQ = -1;
+let angle = 0, spinning = false, score = 0, asked = 0;
+let answered = new Array(15).fill(null);
+const NUM = 15, ARC = (Math.PI * 2) / NUM;
 
 const canvas = document.getElementById('wheel');
 const ctx = canvas.getContext('2d');
-const NUM = 10;
-const ARC = (Math.PI * 2) / NUM;
 
 function drawWheel(rot) {
-  const cx = canvas.width / 2;
-  const cy = canvas.height / 2;
-  const r = cx - 4;
-  ctx.clearRect(0, 0, canvas.width, canvas.height);
-
-  for (let i = 0; i < NUM; i++) {
-    const startAngle = rot + i * ARC;
-    const endAngle = startAngle + ARC;
-
-    // Wedge fill
-    ctx.beginPath();
-    ctx.moveTo(cx, cy);
-    ctx.arc(cx, cy, r, startAngle, endAngle);
-    ctx.closePath();
-    ctx.fillStyle = answered[i] === true ? '#27AE60'
-                  : answered[i] === false ? '#C0392B'
-                  : COLORS[i];
+  const cx = canvas.width/2, cy = canvas.height/2, r = cx-4;
+  ctx.clearRect(0,0,canvas.width,canvas.height);
+  for(let i=0;i<NUM;i++){
+    const sa=rot+i*ARC, ea=sa+ARC;
+    ctx.beginPath(); ctx.moveTo(cx,cy); ctx.arc(cx,cy,r,sa,ea); ctx.closePath();
+    ctx.fillStyle = answered[i]===true?'#27AE60':answered[i]===false?'#C0392B':COLORS[i];
     ctx.fill();
-
-    // Wedge border
-    ctx.strokeStyle = 'rgba(255,255,255,0.18)';
-    ctx.lineWidth = 2;
-    ctx.stroke();
-
-    // Label
-    ctx.save();
-    ctx.translate(cx, cy);
-    ctx.rotate(startAngle + ARC / 2);
-
-    // Question number
-    ctx.fillStyle = 'rgba(0,0,0,0.35)';
-    ctx.font = 'bold 28px Fredoka One, cursive';
-    ctx.textAlign = 'center';
-    ctx.textBaseline = 'middle';
-    ctx.fillText(String(i + 1), r * 0.68, 1);
-    ctx.fillStyle = '#fff';
-    ctx.fillText(String(i + 1), r * 0.68, 0);
-
-    // Emoji
-    ctx.font = '22px serif';
-    ctx.fillText(EMOJIS[i], r * 0.85, 0);
-
+    ctx.strokeStyle='rgba(255,255,255,0.15)'; ctx.lineWidth=1.5; ctx.stroke();
+    ctx.save(); ctx.translate(cx,cy); ctx.rotate(sa+ARC/2);
+    ctx.fillStyle='rgba(0,0,0,0.3)'; ctx.font='bold 21px Trebuchet MS,sans-serif';
+    ctx.textAlign='center'; ctx.textBaseline='middle';
+    ctx.fillText(String(i+1),r*0.64,1);
+    ctx.fillStyle='#fff'; ctx.fillText(String(i+1),r*0.64,0);
+    ctx.font='17px serif'; ctx.fillText(EMOJIS[i],r*0.82,0);
     ctx.restore();
   }
-
-  // Outer ring
-  ctx.beginPath();
-  ctx.arc(cx, cy, r, 0, Math.PI * 2);
-  ctx.strokeStyle = 'rgba(255,255,255,0.3)';
-  ctx.lineWidth = 4;
-  ctx.stroke();
+  ctx.beginPath(); ctx.arc(cx,cy,r,0,Math.PI*2);
+  ctx.strokeStyle='rgba(255,255,255,0.22)'; ctx.lineWidth=3; ctx.stroke();
 }
 
-function spinWheel() {
-  if (spinning) return;
-  const remaining = answered.map((v, i) => v === null ? i : -1).filter(i => i >= 0);
-  if (remaining.length === 0) {
-    showFinalScore();
-    return;
-  }
-
-  spinning = true;
-  document.getElementById('spinBtn').disabled = true;
-
-  // Pick a random unanswered question
-  const target = remaining[Math.floor(Math.random() * remaining.length)];
-
-  // Calculate the rotation needed so target wedge lands at pointer (top)
-  const wedgeMid = target * ARC + ARC / 2;
-  const extraSpins = (3 + Math.floor(Math.random() * 3)) * Math.PI * 2;
-  // We want (angle + totalRot + wedgeMid) ≡ -π/2 (mod 2π) so it points up
-  const currentNorm = angle % (Math.PI * 2);
-  let needed = -Math.PI / 2 - wedgeMid - currentNorm;
-  needed = ((needed % (Math.PI * 2)) + Math.PI * 2) % (Math.PI * 2);
-  const totalRot = extraSpins + needed;
-
-  let start = null;
-  const duration = 3000 + Math.random() * 1000;
-
-  function ease(t) {
-    return t < 0.5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2;
-  }
-
-  function animate(ts) {
-    if (!start) start = ts;
-    const elapsed = ts - start;
-    const progress = Math.min(elapsed / duration, 1);
-    const eased = ease(progress);
-
-    angle = (angle + 0) % (Math.PI * 2);
-    drawWheel(angle + eased * totalRot);
-
-    if (progress < 1) {
-      requestAnimationFrame(animate);
-    } else {
-      angle = (angle + totalRot) % (Math.PI * 2);
-      drawWheel(angle);
-      spinning = false;
-      currentQ = target;
-      setTimeout(() => openQuestion(target), 300);
+function spinWheel(){
+  if(spinning)return;
+  const rem=answered.map((v,i)=>v===null?i:-1).filter(i=>i>=0);
+  if(!rem.length){showFinalScore();return;}
+  startMusicOnFirstSpin();
+  spinning=true;
+  document.getElementById('spinBtn').disabled=true;
+  const target=rem[Math.floor(Math.random()*rem.length)];
+  const wm=target*ARC+ARC/2;
+  const extra=(3+Math.floor(Math.random()*3))*Math.PI*2;
+  const cn=angle%(Math.PI*2);
+  let need=-Math.PI/2-wm-cn;
+  need=((need%(Math.PI*2))+Math.PI*2)%(Math.PI*2);
+  const total=extra+need;
+  let start=null, dur=3000+Math.random()*1000;
+  function ease(t){return t<0.5?4*t*t*t:1-Math.pow(-2*t+2,3)/2;}
+  function animate(ts){
+    if(!start)start=ts;
+    const p=Math.min((ts-start)/dur,1);
+    drawWheel(angle+ease(p)*total);
+    if(p<1){requestAnimationFrame(animate);}
+    else{
+      angle=(angle+total)%(Math.PI*2);
+      drawWheel(angle); spinning=false;
+      setTimeout(()=>openQuestion(target),300);
     }
   }
   requestAnimationFrame(animate);
 }
 
-function openQuestion(idx) {
-  const q = QUESTIONS[idx];
-  asked++;
-
-  document.getElementById('qTag').textContent = `Question ${asked} of 10`;
-  document.getElementById('questionText').textContent = q.q;
+function openQuestion(idx){
+  const q=QUESTIONS[idx]; asked++;
+  document.getElementById('qTag').textContent=`Question ${asked} of 15`;
+  document.getElementById('questionText').textContent=q.q;
   document.getElementById('funFact').classList.remove('show');
-  document.getElementById('funFactText').textContent = q.fact;
+  document.getElementById('funFactText').textContent=q.fact;
   document.getElementById('nextBtn').classList.remove('show');
-
-  const choicesEl = document.getElementById('choices');
-  choicesEl.innerHTML = '';
-  const letters = ['A','B','C','D'];
-  q.choices.forEach((choice, i) => {
-    const btn = document.createElement('button');
-    btn.className = 'choice-btn';
-    btn.innerHTML = `<span class="letter">${letters[i]}</span><span>${choice}</span>`;
-    btn.onclick = () => selectAnswer(idx, i, q.answer);
-    choicesEl.appendChild(btn);
+  const ce=document.getElementById('choices'); ce.innerHTML='';
+  ['A','B','C','D'].forEach((l,i)=>{
+    const b=document.createElement('button');
+    b.className='choice-btn';
+    b.innerHTML=`<span class="letter">${l}</span><span>${q.choices[i]}</span>`;
+    b.onclick=()=>selectAnswer(idx,i,q.answer);
+    ce.appendChild(b);
   });
-
   document.getElementById('modalBg').classList.add('show');
   updateStats();
 }
 
-function selectAnswer(qIdx, chosen, correct) {
-  const btns = document.querySelectorAll('.choice-btn');
-  btns.forEach(b => b.classList.add('locked'));
-  btns.forEach(b => { b.onclick = null; b.style.cursor = 'default'; });
-
-  const isCorrect = chosen === correct;
-  btns[chosen].classList.add(isCorrect ? 'correct' : 'wrong');
-  if (!isCorrect) btns[correct].classList.add('correct');
-
-  answered[qIdx] = isCorrect;
-  if (isCorrect) {
-    score++;
-    triggerConfetti();
-  }
-
-  updateDots();
-  updateStats();
-  drawWheel(angle);
-
+function selectAnswer(qi,chosen,correct){
+  const btns=document.querySelectorAll('.choice-btn');
+  btns.forEach(b=>{b.classList.add('locked');b.onclick=null;b.style.cursor='default';});
+  btns[chosen].classList.add(chosen===correct?'correct':'wrong');
+  if(chosen!==correct)btns[correct].classList.add('correct');
+  answered[qi]=(chosen===correct);
+  if(chosen===correct){score++;triggerConfetti();}
+  updateDots();updateStats();drawWheel(angle);
   document.getElementById('funFact').classList.add('show');
-  document.getElementById('nextBtn').classList.add('show');
-  document.getElementById('nextBtn').textContent =
-    answered.filter(v => v === null).length === 0 ? 'See Final Score! 🏆' : 'Spin Again! 🎡';
+  const nb=document.getElementById('nextBtn');
+  nb.classList.add('show');
+  nb.textContent=answered.filter(v=>v===null).length===0?'See Final Score! 🏆':'Spin Again! 🎡';
 }
 
-function closeModal() {
+function closeModal(){
   document.getElementById('modalBg').classList.remove('show');
-  document.getElementById('spinBtn').disabled = false;
+  document.getElementById('spinBtn').disabled=false;
   updateStats();
-  if (answered.filter(v => v === null).length === 0) {
-    setTimeout(showFinalScore, 400);
-  }
+  if(answered.filter(v=>v===null).length===0)setTimeout(showFinalScore,400);
 }
 
-function updateStats() {
-  document.getElementById('scoreVal').textContent = score;
-  document.getElementById('askedVal').textContent = asked;
-  document.getElementById('leftVal').textContent = answered.filter(v => v === null).length;
+function updateStats(){
+  document.getElementById('scoreVal').textContent=score;
+  document.getElementById('askedVal').textContent=asked;
+  document.getElementById('leftVal').textContent=answered.filter(v=>v===null).length;
 }
 
-function updateDots() {
-  const dots = document.querySelectorAll('.dot');
-  dots.forEach((d, i) => {
-    d.classList.remove('done','correct','wrong');
-    if (answered[i] === true) d.classList.add('correct');
-    else if (answered[i] === false) d.classList.add('wrong');
+function updateDots(){
+  document.querySelectorAll('.dot').forEach((d,i)=>{
+    d.classList.remove('correct','wrong');
+    if(answered[i]===true)d.classList.add('correct');
+    if(answered[i]===false)d.classList.add('wrong');
   });
 }
 
-function triggerConfetti() {
-  const wrap = document.getElementById('confettiWrap');
-  const colors = ['#F1C40F','#E74C3C','#2ED573','#FF6B81','#fff','#E67E22'];
-  for (let i = 0; i < 50; i++) {
-    const c = document.createElement('div');
-    c.className = 'confetto';
-    const size = 6 + Math.random() * 8;
-    c.style.cssText = `
-      left:${Math.random()*100}%;
-      width:${size}px; height:${size}px;
-      background:${colors[Math.floor(Math.random()*colors.length)]};
-      border-radius:${Math.random() > 0.5 ? '50%' : '2px'};
-      animation-duration:${1.5 + Math.random()*1.5}s;
-      animation-delay:${Math.random()*0.5}s;
-      opacity:1;
-    `;
-    wrap.appendChild(c);
-    c.addEventListener('animationend', () => c.remove());
+function triggerConfetti(){
+  const w=document.getElementById('confettiWrap');
+  const c=['#F1C40F','#E74C3C','#2ED573','#FF6B81','#fff','#E67E22'];
+  for(let i=0;i<55;i++){
+    const el=document.createElement('div');
+    el.className='confetto';
+    const s=6+Math.random()*8;
+    el.style.cssText=`left:${Math.random()*100}%;width:${s}px;height:${s}px;
+      background:${c[Math.floor(Math.random()*c.length)]};
+      border-radius:${Math.random()>.5?'50%':'2px'};
+      animation-duration:${1.5+Math.random()*1.5}s;
+      animation-delay:${Math.random()*0.5}s;opacity:1;`;
+    w.appendChild(el);
+    el.addEventListener('animationend',()=>el.remove());
   }
 }
 
-function showFinalScore() {
-  const pct = Math.round((score / 10) * 100);
-  let msg, emoji;
-  if (pct === 100) { msg = "Perfect Score! You're a Chinese Culture Master!"; emoji = "🏆🐉"; }
-  else if (pct >= 80) { msg = "Amazing! You really know your Chinese culture!"; emoji = "🌟🏮"; }
-  else if (pct >= 60) { msg = "Great job! Keep exploring Chinese culture!"; emoji = "👍🥟"; }
-  else if (pct >= 40) { msg = "Good effort! There's so much more to discover!"; emoji = "🐼📚"; }
-  else { msg = "Nice try! Chinese culture is deep and fascinating!"; emoji = "🎋🌸"; }
-
-  document.getElementById('questionText').textContent = `${emoji} Final Score: ${score} / 10 — ${pct}%`;
-  document.getElementById('qTag').textContent = "Quiz Complete!";
-  document.getElementById('choices').innerHTML = `
-    <div style="text-align:center; padding: 1rem 0;">
-      <p style="color:#ffdfa0; font-size:1.05rem; font-weight:700; margin-bottom:0.5rem;">${msg}</p>
-      <div style="display:flex; justify-content:center; gap:6px; flex-wrap:wrap; margin-top:0.8rem;">
-        ${answered.map((v,i) => `<span style="font-size:1.5rem;">${v===true?'✅':'❌'}</span>`).join('')}
+function showFinalScore(){
+  const pct=Math.round((score/15)*100);
+  let msg,emoji;
+  if(pct===100){msg="Perfect! You're a Chinese Culture Master!";emoji="🏆🐉";}
+  else if(pct>=80){msg="Amazing! You really know your Chinese culture!";emoji="🌟🏮";}
+  else if(pct>=60){msg="Great job! Keep exploring Chinese culture!";emoji="👍🥟";}
+  else if(pct>=40){msg="Good effort! There's so much more to discover!";emoji="🐼📚";}
+  else{msg="Nice try! Chinese culture is deep and fascinating!";emoji="🎋🌸";}
+  document.getElementById('questionText').textContent=`${emoji} Final Score: ${score} / 15 — ${pct}%`;
+  document.getElementById('qTag').textContent="Quiz Complete!";
+  document.getElementById('choices').innerHTML=`
+    <div style="text-align:center;padding:1rem 0">
+      <p style="color:#ffdfa0;font-size:.98rem;font-weight:700;margin-bottom:.5rem">${msg}</p>
+      <div style="display:flex;justify-content:center;gap:4px;flex-wrap:wrap;margin-top:.6rem">
+        ${answered.map(v=>`<span style="font-size:1.3rem">${v===true?'✅':'❌'}</span>`).join('')}
       </div>
     </div>`;
   document.getElementById('funFact').classList.remove('show');
-  const nextBtn = document.getElementById('nextBtn');
-  nextBtn.textContent = '🔄 Play Again!';
-  nextBtn.classList.add('show');
-  nextBtn.onclick = resetGame;
+  const nb=document.getElementById('nextBtn');
+  nb.textContent='🔄 Play Again!'; nb.classList.add('show');
+  nb.onclick=resetGame;
   document.getElementById('modalBg').classList.add('show');
-  triggerConfetti(); triggerConfetti();
+  triggerConfetti();triggerConfetti();
 }
 
-function resetGame() {
-  answered = new Array(10).fill(null);
-  score = 0; asked = 0; currentQ = -1;
-  angle = 0;
-  updateStats();
-  updateDots();
-  drawWheel(0);
+function resetGame(){
+  answered=new Array(15).fill(null);
+  score=0;asked=0;angle=0;
+  updateStats();updateDots();drawWheel(0);
   document.getElementById('modalBg').classList.remove('show');
-  document.getElementById('spinBtn').disabled = false;
-  document.getElementById('nextBtn').onclick = closeModal;
+  document.getElementById('spinBtn').disabled=false;
+  document.getElementById('nextBtn').onclick=closeModal;
 }
 
-// Build dots
-(function buildDots() {
-  const wrap = document.getElementById('dots');
-  for (let i = 0; i < 10; i++) {
-    const d = document.createElement('div');
-    d.className = 'dot';
-    d.title = `Question ${i+1}`;
-    wrap.appendChild(d);
+(function(){
+  const w=document.getElementById('dots');
+  for(let i=0;i<15;i++){
+    const d=document.createElement('div');
+    d.className='dot';d.title=`Question ${i+1}`;
+    w.appendChild(d);
   }
 })();
 
-canvas.addEventListener('click', spinWheel);
+canvas.addEventListener('click',spinWheel);
 drawWheel(0);
+
+/* ════════════════════════════════════════════════════════
+   OFFLINE WEB AUDIO — Chinese Pentatonic Background Music
+   Uses only the built-in Web Audio API. Zero external files.
+   Generates a guzheng-like plucked melody using oscillators.
+════════════════════════════════════════════════════════ */
+let audioCtx=null, musicPlaying=false, melodyTimer=null, musicStarted=false;
+
+/* C major pentatonic: C4 D4 E4 G4 A4 C5 D5 E5 G5 A5 */
+const SCALE=[261.63,293.66,329.63,392.00,440.00,523.25,587.33,659.25,784.00,880.00];
+
+/*  Four-phrase Chinese melody
+    [scale-index, duration-seconds]
+    Follows 起承转合 (qǐ-chéng-zhuǎn-hé) — intro/develop/turn/resolve  */
+const MELODY=[
+  /* 起 — introduction, high descending */
+  [7,.45],[8,.25],[9,.6],[8,.25],[7,.42],[6,.25],[5,.7],
+  /* 承 — continuation, mid ascending */
+  [3,.45],[4,.25],[5,.42],[6,.42],[7,.25],[8,.25],[7,.9],
+  /* 转 — turn, wide sweep */
+  [9,.42],[8,.25],[7,.42],[5,.25],[4,.22],[5,.22],[6,.42],[7,.7],
+  /* 合 — resolution, settle to root */
+  [5,.42],[4,.25],[3,.42],[2,.25],[3,.22],[4,.22],[5,.42],[3,1.2]
+];
+
+function initAudio(){
+  if(audioCtx)return;
+  audioCtx=new(window.AudioContext||window.webkitAudioContext)();
+}
+
+/* Pluck one note: triangle osc + fast decay = guzheng feel */
+function pluck(freq,when,dur){
+  const gain=audioCtx.createGain();
+  gain.gain.setValueAtTime(0,when);
+  gain.gain.linearRampToValueAtTime(0.12,when+0.008);
+  gain.gain.exponentialRampToValueAtTime(0.001,when+dur*0.88);
+  gain.connect(audioCtx.destination);
+
+  const osc=audioCtx.createOscillator();
+  osc.type='triangle';
+  osc.frequency.setValueAtTime(freq,when);
+  osc.connect(gain);
+  osc.start(when); osc.stop(when+dur+0.08);
+
+  /* Subtle vibrato */
+  const vOsc=audioCtx.createOscillator();
+  const vGain=audioCtx.createGain();
+  vOsc.frequency.value=4.8; vGain.gain.value=freq*0.004;
+  vOsc.connect(vGain); vGain.connect(osc.frequency);
+  vOsc.start(when); vOsc.stop(when+dur+0.1);
+
+  /* Octave-lower sub for warmth */
+  const sub=audioCtx.createOscillator();
+  const sg=audioCtx.createGain();
+  sub.type='sine'; sub.frequency.setValueAtTime(freq/2,when);
+  sg.gain.setValueAtTime(0,when);
+  sg.gain.linearRampToValueAtTime(0.04,when+0.01);
+  sg.gain.exponentialRampToValueAtTime(0.001,when+dur*0.7);
+  sub.connect(sg); sg.connect(audioCtx.destination);
+  sub.start(when); sub.stop(when+dur+0.08);
+}
+
+function playMelodyOnce(){
+  if(!musicPlaying)return;
+  let t=audioCtx.currentTime+0.05, total=0;
+  MELODY.forEach(([idx,dur])=>{ pluck(SCALE[idx],t,dur+0.12); t+=dur; total+=dur; });
+  melodyTimer=setTimeout(playMelodyOnce,(total+1.8)*1000);
+}
+
+function startMusic(){
+  initAudio();
+  if(audioCtx.state==='suspended')audioCtx.resume();
+  musicPlaying=true;
+  document.getElementById('musicBtn').textContent='🎵';
+  playMelodyOnce();
+}
+
+function stopMusic(){
+  musicPlaying=false;
+  if(melodyTimer){clearTimeout(melodyTimer);melodyTimer=null;}
+  document.getElementById('musicBtn').textContent='🔇';
+}
+
+function toggleMusic(){
+  if(musicPlaying)stopMusic(); else startMusic();
+}
+
+/* Auto-start on first spin (respects browser autoplay policy) */
+function startMusicOnFirstSpin(){
+  if(!musicStarted){musicStarted=true;startMusic();}
+}
 </script>
 </body>
 </html>
