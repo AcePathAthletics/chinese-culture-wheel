@@ -1,0 +1,694 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Chinese Culture Quiz – Herbert Hoover Middle School Multicultural Night</title>
+<style>
+  /* ── 100% offline: zero external resources ── */
+  :root {
+    --red:   #C0392B;
+    --red2:  #E74C3C;
+    --gold:  #F1C40F;
+    --gold2: #E67E22;
+    --dark:  #1a0a00;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: 'Trebuchet MS', 'Segoe UI', system-ui, sans-serif;
+    background: var(--dark);
+    min-height: 100vh;
+    overflow-x: hidden;
+    background-image:
+      radial-gradient(circle at 10% 20%, rgba(192,57,43,0.18) 0%, transparent 50%),
+      radial-gradient(circle at 90% 80%, rgba(241,196,15,0.12) 0%, transparent 50%);
+  }
+
+  .lanterns {
+    position: fixed; top: 0; left: 0; width: 100%;
+    pointer-events: none; z-index: 0;
+    display: flex; justify-content: space-between; padding: 0 1.5rem;
+  }
+  .lantern {
+    width: 26px; height: 42px; border-radius: 50%;
+    position: relative; animation: sway 3s ease-in-out infinite;
+  }
+  .lantern::before {
+    content:''; position:absolute; top:-10px; left:50%; transform:translateX(-50%);
+    width:2px; height:12px; background:var(--gold);
+  }
+  .lantern::after {
+    content:''; position:absolute; bottom:-6px; left:50%; transform:translateX(-50%);
+    width:1px; height:8px; background:var(--gold);
+  }
+  .lantern:nth-child(odd)  { background:radial-gradient(circle at 40% 40%,#ff6b6b,var(--red)); animation-delay:-1.5s; }
+  .lantern:nth-child(even) { background:radial-gradient(circle at 40% 40%,#ffe56b,var(--gold2)); }
+  @keyframes sway { 0%,100%{transform:rotate(-8deg)} 50%{transform:rotate(8deg)} }
+
+  #musicBtn {
+    position: fixed; top: 14px; right: 14px; z-index: 20;
+    background: rgba(0,0,0,0.45); border: 1.5px solid var(--gold);
+    border-radius: 50%; width: 42px; height: 42px;
+    font-size: 1.15rem; cursor: pointer; color: var(--gold);
+    display: flex; align-items: center; justify-content: center;
+    transition: background 0.2s;
+  }
+  #musicBtn:hover { background: rgba(241,196,15,0.18); }
+
+  header {
+    position: relative; z-index: 1;
+    text-align: center; padding: 1.4rem 1rem 0.3rem;
+  }
+  header h1 {
+    font-family: Georgia, 'Times New Roman', serif;
+    font-size: clamp(1.8rem, 4.5vw, 3rem);
+    font-weight: 700;
+    color: var(--gold);
+    text-shadow: 3px 3px 0 var(--red), 5px 5px 0 rgba(0,0,0,0.4);
+    letter-spacing: 1px; line-height: 1.2;
+  }
+  .school-name {
+    display: block;
+    font-size: clamp(0.72rem, 1.9vw, 0.98rem);
+    font-weight: 600; color: #ffcc66;
+    letter-spacing: 2px; text-transform: uppercase;
+    margin-top: 0.35rem; opacity: 0.9;
+  }
+  .chinese-char {
+    display: block; font-size: 1.5rem;
+    color: rgba(241,196,15,0.38);
+    letter-spacing: 0.5rem; margin-top: 0.2rem;
+  }
+
+  main {
+    position: relative; z-index: 1;
+    display: flex; flex-direction: column; align-items: center;
+    padding: 0.8rem 1rem 2rem; gap: 1.2rem;
+  }
+
+  .wheel-area { position:relative; display:flex; flex-direction:column; align-items:center; }
+  .pointer {
+    width:0; height:0;
+    border-left:16px solid transparent;
+    border-right:16px solid transparent;
+    border-top:32px solid var(--gold);
+    filter:drop-shadow(0 2px 4px rgba(0,0,0,0.5));
+    position:relative; z-index:5; margin-bottom:-3px;
+  }
+  .wheel-frame {
+    width:min(430px,92vw); height:min(430px,92vw);
+    border-radius:50%; padding:9px;
+    background:conic-gradient(var(--gold),var(--gold2),var(--gold),var(--gold2));
+    box-shadow:0 0 40px rgba(241,196,15,0.35),0 0 80px rgba(192,57,43,0.25);
+    position:relative;
+  }
+  canvas {
+    border-radius:50%; display:block; cursor:pointer;
+    width:100%; height:100%; transition:filter 0.2s;
+  }
+  canvas:hover { filter:brightness(1.05); }
+  .hub {
+    position:absolute; top:50%; left:50%;
+    transform:translate(-50%,-50%);
+    width:58px; height:58px; border-radius:50%;
+    background:radial-gradient(circle at 35% 35%,#ffe566,var(--gold2));
+    border:3px solid var(--red);
+    box-shadow:0 0 14px rgba(241,196,15,0.6);
+    display:flex; align-items:center; justify-content:center;
+    font-family:Georgia,serif; font-size:1.5rem; color:var(--red);
+    z-index:10; pointer-events:none; user-select:none;
+  }
+
+  .spin-btn {
+    font-family:Georgia,serif; font-size:1.3rem; font-weight:700;
+    padding:0.7rem 2.6rem; border-radius:50px;
+    border:3px solid var(--gold);
+    background:linear-gradient(135deg,var(--red2),var(--red));
+    color:var(--gold); cursor:pointer;
+    text-shadow:1px 1px 0 rgba(0,0,0,0.3);
+    box-shadow:0 6px 20px rgba(192,57,43,0.5),0 2px 0 rgba(0,0,0,0.3);
+    transition:transform 0.15s,box-shadow 0.15s; letter-spacing:1px;
+  }
+  .spin-btn:hover  { transform:translateY(-2px); box-shadow:0 10px 28px rgba(192,57,43,0.6); }
+  .spin-btn:active { transform:translateY(1px); }
+  .spin-btn:disabled { opacity:0.5; cursor:not-allowed; transform:none; }
+
+  .score-strip {
+    display:flex; gap:2rem; align-items:center;
+    background:rgba(255,255,255,0.06);
+    border:1px solid rgba(241,196,15,0.25);
+    border-radius:50px; padding:0.45rem 1.8rem;
+  }
+  .score-item { text-align:center; }
+  .score-item .val {
+    display:block;
+    font-family:Georgia,serif; font-size:1.7rem; color:var(--gold); line-height:1;
+  }
+  .score-item .lbl {
+    font-size:0.7rem; text-transform:uppercase; letter-spacing:1px;
+    color:rgba(255,200,80,0.55); font-weight:700;
+  }
+  .divider { width:1px; height:34px; background:rgba(241,196,15,0.25); }
+
+  .modal-bg {
+    display:none; position:fixed; inset:0;
+    background:rgba(10,3,0,0.88); backdrop-filter:blur(4px);
+    z-index:100; align-items:center; justify-content:center; padding:1rem;
+  }
+  .modal-bg.show { display:flex; }
+  .modal {
+    background:linear-gradient(160deg,#2a0e04,#1a0800);
+    border:3px solid var(--gold); border-radius:22px;
+    max-width:530px; width:100%; overflow:hidden;
+    box-shadow:0 0 60px rgba(241,196,15,0.2),0 30px 80px rgba(0,0,0,0.8);
+    animation:popIn 0.35s cubic-bezier(.175,.885,.32,1.275) both;
+  }
+  @keyframes popIn { from{transform:scale(0.7) translateY(20px);opacity:0} to{transform:scale(1);opacity:1} }
+  .modal-header {
+    background:linear-gradient(135deg,var(--red),#8b1a10);
+    padding:1.1rem 1.4rem;
+    display:flex; justify-content:space-between; align-items:center;
+    border-bottom:2px solid var(--gold);
+  }
+  .q-tag {
+    font-family:Georgia,serif; font-size:0.82rem; font-weight:700;
+    color:var(--gold); letter-spacing:1px; text-transform:uppercase;
+    background:rgba(0,0,0,0.25); padding:2px 10px; border-radius:20px;
+  }
+  .modal-close {
+    background:none; border:none; color:var(--gold);
+    font-size:1.4rem; cursor:pointer; padding:0 4px; line-height:1;
+    transition:transform 0.2s;
+  }
+  .modal-close:hover { transform:scale(1.2) rotate(90deg); }
+  .modal-body { padding:1.4rem; }
+  .question-text {
+    font-size:1.15rem; font-weight:700; color:#ffe8b0;
+    line-height:1.45; margin-bottom:1rem; text-align:center;
+  }
+  .choices { display:flex; flex-direction:column; gap:0.5rem; margin-bottom:1rem; }
+  .choice-btn {
+    background:rgba(255,255,255,0.05);
+    border:1.5px solid rgba(241,196,15,0.3);
+    border-radius:11px; padding:0.62rem 1rem;
+    color:#ffdfa0; font-family:'Trebuchet MS',sans-serif;
+    font-size:0.93rem; font-weight:700;
+    cursor:pointer; text-align:left;
+    display:flex; align-items:center; gap:0.65rem;
+    transition:background 0.18s,border-color 0.18s,transform 0.12s;
+  }
+  .choice-btn:not(.locked):hover {
+    background:rgba(241,196,15,0.12); border-color:var(--gold);
+    transform:translateX(4px);
+  }
+  .choice-btn .letter {
+    min-width:26px; height:26px; border-radius:50%;
+    background:rgba(241,196,15,0.15); border:1.5px solid rgba(241,196,15,0.4);
+    display:flex; align-items:center; justify-content:center;
+    font-size:0.76rem; font-weight:800; color:var(--gold); flex-shrink:0;
+  }
+  .choice-btn.correct { background:rgba(46,213,115,0.18); border-color:#2ed573; }
+  .choice-btn.correct .letter { background:#2ed573; color:#000; border-color:#2ed573; }
+  .choice-btn.wrong   { background:rgba(255,71,87,0.18); border-color:#ff4757; }
+  .choice-btn.wrong .letter   { background:#ff4757; color:#fff; border-color:#ff4757; }
+  .fun-fact {
+    background:rgba(241,196,15,0.08);
+    border-left:3px solid var(--gold);
+    border-radius:0 11px 11px 0;
+    padding:0.72rem 1rem; color:#ffd580;
+    font-size:0.9rem; line-height:1.55;
+    margin-bottom:1rem; display:none;
+  }
+  .fun-fact.show { display:block; }
+  .fun-fact strong {
+    display:block; margin-bottom:0.2rem;
+    font-size:0.74rem; letter-spacing:1px;
+    text-transform:uppercase; color:var(--gold);
+  }
+  .next-btn {
+    width:100%; font-family:Georgia,serif;
+    font-size:1.12rem; font-weight:700;
+    padding:0.68rem; border-radius:11px;
+    border:2px solid var(--gold);
+    background:linear-gradient(135deg,var(--gold2),#c0700d);
+    color:#fff; cursor:pointer; letter-spacing:1px;
+    transition:filter 0.2s,transform 0.12s; display:none;
+  }
+  .next-btn.show { display:block; }
+  .next-btn:hover { filter:brightness(1.1); transform:translateY(-1px); }
+
+  .confetti-wrap { position:fixed; inset:0; pointer-events:none; z-index:200; overflow:hidden; }
+  .confetto { position:absolute; top:-12px; animation:fall linear forwards; }
+  @keyframes fall { to { transform:translateY(110vh) rotate(720deg); opacity:0; } }
+
+  .answered-dots {
+    display:flex; flex-wrap:wrap; gap:5px;
+    justify-content:center; max-width:340px;
+  }
+  .dot {
+    width:11px; height:11px; border-radius:50%;
+    background:rgba(255,255,255,0.1);
+    border:1.5px solid rgba(241,196,15,0.2);
+    transition:background 0.3s,border-color 0.3s;
+  }
+  .dot.correct { background:#2ed573; border-color:#2ed573; }
+  .dot.wrong   { background:#ff4757; border-color:#ff4757; }
+
+  footer {
+    position:relative; z-index:1;
+    text-align:center; padding:1rem;
+    color:rgba(255,200,80,0.28); font-size:0.76rem;
+  }
+</style>
+</head>
+<body>
+
+<div class="lanterns">
+  <div class="lantern"></div><div class="lantern"></div><div class="lantern"></div>
+  <div class="lantern"></div><div class="lantern"></div><div class="lantern"></div>
+  <div class="lantern"></div><div class="lantern"></div>
+</div>
+
+<div class="confetti-wrap" id="confettiWrap"></div>
+
+<button id="musicBtn" onclick="toggleMusic()" title="Toggle background music">🔇</button>
+
+<header>
+  <h1>🐉 Spin &amp; Learn! 🐉</h1>
+  <span class="school-name">Herbert Hoover Middle School &nbsp;·&nbsp; Multicultural Night</span>
+  <span class="chinese-char">文化 知识 趣味</span>
+</header>
+
+<main>
+  <div class="score-strip">
+    <div class="score-item"><span class="val" id="scoreVal">0</span><span class="lbl">Score</span></div>
+    <div class="divider"></div>
+    <div class="score-item"><span class="val" id="askedVal">0</span><span class="lbl">Asked</span></div>
+    <div class="divider"></div>
+    <div class="score-item"><span class="val" id="leftVal">15</span><span class="lbl">Left</span></div>
+  </div>
+
+  <div class="wheel-area">
+    <div class="pointer"></div>
+    <div class="wheel-frame">
+      <canvas id="wheel" width="420" height="420"></canvas>
+      <div class="hub" aria-hidden="true">福</div>
+    </div>
+  </div>
+
+  <button class="spin-btn" id="spinBtn" onclick="spinWheel()">🎰 SPIN!</button>
+  <div class="answered-dots" id="dots"></div>
+</main>
+
+<footer>Herbert Hoover Middle School · Multicultural Night · Chinese Culture Quiz</footer>
+
+<div class="modal-bg" id="modalBg" role="dialog" aria-modal="true">
+  <div class="modal">
+    <div class="modal-header">
+      <span class="q-tag" id="qTag">Question 1 / 15</span>
+      <button class="modal-close" onclick="closeModal()" aria-label="Close">✕</button>
+    </div>
+    <div class="modal-body">
+      <p class="question-text" id="questionText"></p>
+      <div class="choices" id="choices"></div>
+      <div class="fun-fact" id="funFact">
+        <strong>🌟 Fun Fact</strong>
+        <span id="funFactText"></span>
+      </div>
+      <button class="next-btn" id="nextBtn" onclick="closeModal()">Spin Again! 🎡</button>
+    </div>
+  </div>
+</div>
+
+<script>
+/* ── 15 QUESTIONS (easy & fun for middle school) ── */
+const QUESTIONS = [
+  {
+    q:"What is the name of the famous giant wall stretching across northern China? 🏯",
+    choices:["The Dragon Wall","The Great Wall of China","The Stone Wall","The Emperor's Fence"],
+    answer:1,
+    fact:"The Great Wall of China (万里长城) is one of the most amazing structures ever built! It stretches over 13,000 miles and was built to protect China from invaders. Workers used stone, brick, and even sticky rice as mortar. You can visit many beautiful sections near Beijing today!"
+  },
+  {
+    q:"Chinese New Year is also called the Spring Festival. What is something people do to celebrate? 🧨",
+    choices:["Go to the beach","Set off fireworks and give out red envelopes","Watch a football game","Plant flowers"],
+    answer:1,
+    fact:"Spring Festival (春节) is the biggest holiday in China! People celebrate with fireworks, dragon dances, family feasts, and lucky red envelopes filled with money. Families travel from all over to be together — it causes the largest human migration on Earth every year!"
+  },
+  {
+    q:"How many animals are in the Chinese Zodiac cycle?",
+    choices:["8","10","12","16"],
+    answer:2,
+    fact:"There are 12 animals, each representing one year in a repeating cycle: Rat, Ox, Tiger, Rabbit, Dragon, Snake, Horse, Goat, Monkey, Rooster, Dog, and Pig. What year were you born? Look up your zodiac animal! Each animal is said to give you certain personality traits."
+  },
+  {
+    q:"What color brings good luck in Chinese culture and is used at almost every celebration? 🔴",
+    choices:["Purple","White","Blue","Red"],
+    answer:3,
+    fact:"Red (红色, hóng sè) means good luck and happiness in Chinese culture! Red envelopes, red lanterns, red wedding dresses — red is everywhere at celebrations. Fun fact: white is the color of mourning in China, which is the opposite of many Western cultures!"
+  },
+  {
+    q:"In Chinese culture, dragons are symbols of ___.",
+    choices:["Evil and destruction","Fire and danger","Good luck and power","Cold and winter"],
+    answer:2,
+    fact:"Chinese dragons (龙, lóng) are completely different from Western dragons! They represent good luck, power, and wisdom. Emperors were called 'sons of the dragon.' Dragon dances at festivals are meant to bring good fortune for the whole community. They're heroes, not villains!"
+  },
+  {
+    q:"What is China's most beloved national animal that only eats bamboo? 🐼",
+    choices:["The tiger","The giant panda","The red panda","The snow leopard"],
+    answer:1,
+    fact:"Giant pandas are native only to China and are one of the world's rarest animals — fewer than 2,000 live in the wild. They eat bamboo for up to 12 hours a day! China shares pandas with other countries as a special sign of friendship, known as 'Panda Diplomacy.'"
+  },
+  {
+    q:"What is dim sum (点心) — a popular Chinese food tradition?",
+    choices:["A type of Chinese soup noodle","A Chinese board game","Small bite-sized dishes in steamer baskets, enjoyed with tea","A traditional spicy hot pot"],
+    answer:2,
+    fact:"Dim sum means 'touch the heart' in Cantonese! Families gather at restaurants to share small dishes — dumplings, buns, spring rolls, and more — while drinking tea. Going for dim sum is called 'yum cha' (饮茶), which means 'drink tea.' It's a cozy weekend tradition loved across China!"
+  },
+  {
+    q:"Where did Chinese emperors live for nearly 500 years in Beijing?",
+    choices:["The Summer Palace","The Temple of Heaven","The Forbidden City","The Great Pagoda"],
+    answer:2,
+    fact:"The Forbidden City (故宫) has nearly 10,000 rooms and was home to 24 emperors! Ordinary people weren't allowed inside — entering without permission could mean death. Today it's China's most visited museum. It took 14 years and over a million workers to build!"
+  },
+  {
+    q:"What is inside a red envelope (红包) that Chinese families give children during New Year? 🧧",
+    choices:["Candy","A lucky charm bracelet","Money","A small toy"],
+    answer:2,
+    fact:"Red envelopes (红包, hóngbāo) filled with money are given to bring good luck for the new year! The red color is said to ward off evil spirits. Today people also send digital red envelopes through apps — over 46 billion were sent in a single New Year weekend in China!"
+  },
+  {
+    q:"What does the Yin-Yang symbol ☯ stand for?",
+    choices:["Good versus evil","The balance between opposites, like light and dark","The cycle of the four seasons","The two main rivers in China"],
+    answer:1,
+    fact:"Yin (dark, cool, calm) and Yang (light, warm, active) work together, not against each other! Each half has a small dot of the other color — nothing is completely one thing. This ancient idea from Taoism is over 2,500 years old and still shapes Chinese philosophy, medicine, and art today."
+  },
+  {
+    q:"What is Tai Chi (太极拳)?",
+    choices:["A popular Chinese street food","A slow, flowing exercise based on martial arts — good for health and balance","A kind of Chinese painting","A competitive swimming style"],
+    answer:1,
+    fact:"Tai Chi is practiced by millions of people every day! Its slow, graceful movements reduce stress and improve balance. Visit any park in China at sunrise and you'll see groups of all ages doing Tai Chi together. It started as a martial art over 700 years ago and is sometimes called 'meditation in motion'!"
+  },
+  {
+    q:"The Mid-Autumn Festival celebrates the full moon. What special food do people eat? 🌕",
+    choices:["Spring rolls","Noodles","Mooncakes","Fried rice"],
+    answer:2,
+    fact:"Mooncakes (月饼) are round pastries that represent the full moon and family togetherness. They're filled with sweet paste — like lotus or red bean — and sometimes have a salted egg yolk inside that looks like the moon! The festival also celebrates Chang'e, a legendary woman who lives on the moon."
+  },
+  {
+    q:"Which of these useful things was invented in China thousands of years ago?",
+    choices:["The television","The car","Paper and the compass","The telephone"],
+    answer:2,
+    fact:"China's Four Great Inventions changed the world: paper, printing, gunpowder, and the compass. Paper (around 105 AD) let ideas be written down and shared. The compass (around 200 BCE) helped sailors navigate oceans. Without these inventions, history would look very different!"
+  },
+  {
+    q:"In Chinese Peking Opera (京剧), face paint tells the story. What does a RED painted face usually mean?",
+    choices:["The character is a villain","The character is brave and loyal","The character is a ghost","The character is a poor farmer"],
+    answer:1,
+    fact:"Chinese opera uses colorful face paint instead of masks! Each color has a meaning: Red = brave and loyal. White = sneaky and dishonest. Black = bold and powerful. Gold/Silver = gods or magical beings. Peking Opera also involves acrobatics and martial arts — performers train for years!"
+  },
+  {
+    q:"The character 福 means 'good fortune.' Why do families hang it upside down on their door?",
+    choices:["They accidentally flipped it and kept the tradition","Upside down it looks like a smiling face","Because 'upside down' (倒) sounds like 'arrived' — meaning fortune has arrived!","The emperor told everyone to hang it that way"],
+    answer:2,
+    fact:"It's a fun wordplay! In Chinese, 'upside down' (倒, dào) sounds just like 'arrived' (到, dào). So flipping 福 is like saying 'Good fortune has arrived at your home!' Chinese culture loves these sound-alike puns — fish (鱼, yú) is also served at New Year because yú sounds like 'abundance'!"
+  }
+];
+
+/* ── WHEEL ── */
+const COLORS = [
+  '#C0392B','#E67E22','#F39C12','#27AE60','#2980B9',
+  '#8E44AD','#E74C3C','#16A085','#D35400','#1A5276',
+  '#884EA0','#1E8449','#B7950B','#922B21','#1F618D'
+];
+const EMOJIS = ['🐉','🏮','🥢','🎋','🐼','🎴','🥟','🀄','🏯','📜','🎐','🥮','⛵','🔮','🎑'];
+
+let angle = 0, spinning = false, score = 0, asked = 0;
+let answered = new Array(15).fill(null);
+const NUM = 15, ARC = (Math.PI * 2) / NUM;
+
+const canvas = document.getElementById('wheel');
+const ctx = canvas.getContext('2d');
+
+function drawWheel(rot) {
+  const cx = canvas.width/2, cy = canvas.height/2, r = cx-4;
+  ctx.clearRect(0,0,canvas.width,canvas.height);
+  for(let i=0;i<NUM;i++){
+    const sa=rot+i*ARC, ea=sa+ARC;
+    ctx.beginPath(); ctx.moveTo(cx,cy); ctx.arc(cx,cy,r,sa,ea); ctx.closePath();
+    ctx.fillStyle = answered[i]===true?'#27AE60':answered[i]===false?'#C0392B':COLORS[i];
+    ctx.fill();
+    ctx.strokeStyle='rgba(255,255,255,0.15)'; ctx.lineWidth=1.5; ctx.stroke();
+    ctx.save(); ctx.translate(cx,cy); ctx.rotate(sa+ARC/2);
+    ctx.fillStyle='rgba(0,0,0,0.3)'; ctx.font='bold 21px Trebuchet MS,sans-serif';
+    ctx.textAlign='center'; ctx.textBaseline='middle';
+    ctx.fillText(String(i+1),r*0.64,1);
+    ctx.fillStyle='#fff'; ctx.fillText(String(i+1),r*0.64,0);
+    ctx.font='17px serif'; ctx.fillText(EMOJIS[i],r*0.82,0);
+    ctx.restore();
+  }
+  ctx.beginPath(); ctx.arc(cx,cy,r,0,Math.PI*2);
+  ctx.strokeStyle='rgba(255,255,255,0.22)'; ctx.lineWidth=3; ctx.stroke();
+}
+
+function spinWheel(){
+  if(spinning)return;
+  const rem=answered.map((v,i)=>v===null?i:-1).filter(i=>i>=0);
+  if(!rem.length){showFinalScore();return;}
+  startMusicOnFirstSpin();
+  spinning=true;
+  document.getElementById('spinBtn').disabled=true;
+  const target=rem[Math.floor(Math.random()*rem.length)];
+  const wm=target*ARC+ARC/2;
+  const extra=(3+Math.floor(Math.random()*3))*Math.PI*2;
+  const cn=angle%(Math.PI*2);
+  let need=-Math.PI/2-wm-cn;
+  need=((need%(Math.PI*2))+Math.PI*2)%(Math.PI*2);
+  const total=extra+need;
+  let start=null, dur=3000+Math.random()*1000;
+  function ease(t){return t<0.5?4*t*t*t:1-Math.pow(-2*t+2,3)/2;}
+  function animate(ts){
+    if(!start)start=ts;
+    const p=Math.min((ts-start)/dur,1);
+    drawWheel(angle+ease(p)*total);
+    if(p<1){requestAnimationFrame(animate);}
+    else{
+      angle=(angle+total)%(Math.PI*2);
+      drawWheel(angle); spinning=false;
+      setTimeout(()=>openQuestion(target),300);
+    }
+  }
+  requestAnimationFrame(animate);
+}
+
+function openQuestion(idx){
+  const q=QUESTIONS[idx]; asked++;
+  document.getElementById('qTag').textContent=`Question ${asked} of 15`;
+  document.getElementById('questionText').textContent=q.q;
+  document.getElementById('funFact').classList.remove('show');
+  document.getElementById('funFactText').textContent=q.fact;
+  document.getElementById('nextBtn').classList.remove('show');
+  const ce=document.getElementById('choices'); ce.innerHTML='';
+  ['A','B','C','D'].forEach((l,i)=>{
+    const b=document.createElement('button');
+    b.className='choice-btn';
+    b.innerHTML=`<span class="letter">${l}</span><span>${q.choices[i]}</span>`;
+    b.onclick=()=>selectAnswer(idx,i,q.answer);
+    ce.appendChild(b);
+  });
+  document.getElementById('modalBg').classList.add('show');
+  updateStats();
+}
+
+function selectAnswer(qi,chosen,correct){
+  const btns=document.querySelectorAll('.choice-btn');
+  btns.forEach(b=>{b.classList.add('locked');b.onclick=null;b.style.cursor='default';});
+  btns[chosen].classList.add(chosen===correct?'correct':'wrong');
+  if(chosen!==correct)btns[correct].classList.add('correct');
+  answered[qi]=(chosen===correct);
+  if(chosen===correct){score++;triggerConfetti();}
+  updateDots();updateStats();drawWheel(angle);
+  document.getElementById('funFact').classList.add('show');
+  const nb=document.getElementById('nextBtn');
+  nb.classList.add('show');
+  nb.textContent=answered.filter(v=>v===null).length===0?'See Final Score! 🏆':'Spin Again! 🎡';
+}
+
+function closeModal(){
+  document.getElementById('modalBg').classList.remove('show');
+  document.getElementById('spinBtn').disabled=false;
+  updateStats();
+  if(answered.filter(v=>v===null).length===0)setTimeout(showFinalScore,400);
+}
+
+function updateStats(){
+  document.getElementById('scoreVal').textContent=score;
+  document.getElementById('askedVal').textContent=asked;
+  document.getElementById('leftVal').textContent=answered.filter(v=>v===null).length;
+}
+
+function updateDots(){
+  document.querySelectorAll('.dot').forEach((d,i)=>{
+    d.classList.remove('correct','wrong');
+    if(answered[i]===true)d.classList.add('correct');
+    if(answered[i]===false)d.classList.add('wrong');
+  });
+}
+
+function triggerConfetti(){
+  const w=document.getElementById('confettiWrap');
+  const c=['#F1C40F','#E74C3C','#2ED573','#FF6B81','#fff','#E67E22'];
+  for(let i=0;i<55;i++){
+    const el=document.createElement('div');
+    el.className='confetto';
+    const s=6+Math.random()*8;
+    el.style.cssText=`left:${Math.random()*100}%;width:${s}px;height:${s}px;
+      background:${c[Math.floor(Math.random()*c.length)]};
+      border-radius:${Math.random()>.5?'50%':'2px'};
+      animation-duration:${1.5+Math.random()*1.5}s;
+      animation-delay:${Math.random()*0.5}s;opacity:1;`;
+    w.appendChild(el);
+    el.addEventListener('animationend',()=>el.remove());
+  }
+}
+
+function showFinalScore(){
+  const pct=Math.round((score/15)*100);
+  let msg,emoji;
+  if(pct===100){msg="Perfect! You're a Chinese Culture Master!";emoji="🏆🐉";}
+  else if(pct>=80){msg="Amazing! You really know your Chinese culture!";emoji="🌟🏮";}
+  else if(pct>=60){msg="Great job! Keep exploring Chinese culture!";emoji="👍🥟";}
+  else if(pct>=40){msg="Good effort! There's so much more to discover!";emoji="🐼📚";}
+  else{msg="Nice try! Chinese culture is deep and fascinating!";emoji="🎋🌸";}
+  document.getElementById('questionText').textContent=`${emoji} Final Score: ${score} / 15 — ${pct}%`;
+  document.getElementById('qTag').textContent="Quiz Complete!";
+  document.getElementById('choices').innerHTML=`
+    <div style="text-align:center;padding:1rem 0">
+      <p style="color:#ffdfa0;font-size:.98rem;font-weight:700;margin-bottom:.5rem">${msg}</p>
+      <div style="display:flex;justify-content:center;gap:4px;flex-wrap:wrap;margin-top:.6rem">
+        ${answered.map(v=>`<span style="font-size:1.3rem">${v===true?'✅':'❌'}</span>`).join('')}
+      </div>
+    </div>`;
+  document.getElementById('funFact').classList.remove('show');
+  const nb=document.getElementById('nextBtn');
+  nb.textContent='🔄 Play Again!'; nb.classList.add('show');
+  nb.onclick=resetGame;
+  document.getElementById('modalBg').classList.add('show');
+  triggerConfetti();triggerConfetti();
+}
+
+function resetGame(){
+  answered=new Array(15).fill(null);
+  score=0;asked=0;angle=0;
+  updateStats();updateDots();drawWheel(0);
+  document.getElementById('modalBg').classList.remove('show');
+  document.getElementById('spinBtn').disabled=false;
+  document.getElementById('nextBtn').onclick=closeModal;
+}
+
+(function(){
+  const w=document.getElementById('dots');
+  for(let i=0;i<15;i++){
+    const d=document.createElement('div');
+    d.className='dot';d.title=`Question ${i+1}`;
+    w.appendChild(d);
+  }
+})();
+
+canvas.addEventListener('click',spinWheel);
+drawWheel(0);
+
+/* ════════════════════════════════════════════════════════
+   OFFLINE WEB AUDIO — Chinese Pentatonic Background Music
+   Uses only the built-in Web Audio API. Zero external files.
+   Generates a guzheng-like plucked melody using oscillators.
+════════════════════════════════════════════════════════ */
+let audioCtx=null, musicPlaying=false, melodyTimer=null, musicStarted=false;
+
+/* C major pentatonic: C4 D4 E4 G4 A4 C5 D5 E5 G5 A5 */
+const SCALE=[261.63,293.66,329.63,392.00,440.00,523.25,587.33,659.25,784.00,880.00];
+
+/*  Four-phrase Chinese melody
+    [scale-index, duration-seconds]
+    Follows 起承转合 (qǐ-chéng-zhuǎn-hé) — intro/develop/turn/resolve  */
+const MELODY=[
+  /* 起 — introduction, high descending */
+  [7,.45],[8,.25],[9,.6],[8,.25],[7,.42],[6,.25],[5,.7],
+  /* 承 — continuation, mid ascending */
+  [3,.45],[4,.25],[5,.42],[6,.42],[7,.25],[8,.25],[7,.9],
+  /* 转 — turn, wide sweep */
+  [9,.42],[8,.25],[7,.42],[5,.25],[4,.22],[5,.22],[6,.42],[7,.7],
+  /* 合 — resolution, settle to root */
+  [5,.42],[4,.25],[3,.42],[2,.25],[3,.22],[4,.22],[5,.42],[3,1.2]
+];
+
+function initAudio(){
+  if(audioCtx)return;
+  audioCtx=new(window.AudioContext||window.webkitAudioContext)();
+}
+
+/* Pluck one note: triangle osc + fast decay = guzheng feel */
+function pluck(freq,when,dur){
+  const gain=audioCtx.createGain();
+  gain.gain.setValueAtTime(0,when);
+  gain.gain.linearRampToValueAtTime(0.12,when+0.008);
+  gain.gain.exponentialRampToValueAtTime(0.001,when+dur*0.88);
+  gain.connect(audioCtx.destination);
+
+  const osc=audioCtx.createOscillator();
+  osc.type='triangle';
+  osc.frequency.setValueAtTime(freq,when);
+  osc.connect(gain);
+  osc.start(when); osc.stop(when+dur+0.08);
+
+  /* Subtle vibrato */
+  const vOsc=audioCtx.createOscillator();
+  const vGain=audioCtx.createGain();
+  vOsc.frequency.value=4.8; vGain.gain.value=freq*0.004;
+  vOsc.connect(vGain); vGain.connect(osc.frequency);
+  vOsc.start(when); vOsc.stop(when+dur+0.1);
+
+  /* Octave-lower sub for warmth */
+  const sub=audioCtx.createOscillator();
+  const sg=audioCtx.createGain();
+  sub.type='sine'; sub.frequency.setValueAtTime(freq/2,when);
+  sg.gain.setValueAtTime(0,when);
+  sg.gain.linearRampToValueAtTime(0.04,when+0.01);
+  sg.gain.exponentialRampToValueAtTime(0.001,when+dur*0.7);
+  sub.connect(sg); sg.connect(audioCtx.destination);
+  sub.start(when); sub.stop(when+dur+0.08);
+}
+
+function playMelodyOnce(){
+  if(!musicPlaying)return;
+  let t=audioCtx.currentTime+0.05, total=0;
+  MELODY.forEach(([idx,dur])=>{ pluck(SCALE[idx],t,dur+0.12); t+=dur; total+=dur; });
+  melodyTimer=setTimeout(playMelodyOnce,(total+1.8)*1000);
+}
+
+function startMusic(){
+  initAudio();
+  if(audioCtx.state==='suspended')audioCtx.resume();
+  musicPlaying=true;
+  document.getElementById('musicBtn').textContent='🎵';
+  playMelodyOnce();
+}
+
+function stopMusic(){
+  musicPlaying=false;
+  if(melodyTimer){clearTimeout(melodyTimer);melodyTimer=null;}
+  document.getElementById('musicBtn').textContent='🔇';
+}
+
+function toggleMusic(){
+  if(musicPlaying)stopMusic(); else startMusic();
+}
+
+/* Auto-start on first spin (respects browser autoplay policy) */
+function startMusicOnFirstSpin(){
+  if(!musicStarted){musicStarted=true;startMusic();}
+}
+</script>
+</body>
+</html>
